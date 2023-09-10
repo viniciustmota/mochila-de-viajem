@@ -1,13 +1,16 @@
 const form = document.querySelector("#novoItem");
 const lista = document.querySelector("#lista");
+const itens = []
 
 form.addEventListener("submit", (evento) => {
   evento.preventDefault();
 
-  criaElemento(
-    evento.target.elements["nome"].value,
-    evento.target.elements["quantidade"].value
-  );
+  const nome = evento.target.elements["nome"];
+  const quantidade = evento.target.elements["quantidade"];
+  criaElemento(nome.value, quantidade.value);
+
+  nome.value = "";
+  quantidade.value = "";
 });
 
 function criaElemento(nome, quantidade) {
@@ -21,4 +24,13 @@ function criaElemento(nome, quantidade) {
   novoItem.innerHTML += nome;
 
   lista.appendChild(novoItem);
+
+  const itemAtual = {
+    nome: nome,
+    quantidade: quantidade,
+  };
+
+itens.push(itemAtual)
+
+  localStorage.setItem("item", JSON.stringify(itens));
 }
